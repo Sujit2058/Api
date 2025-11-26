@@ -20,9 +20,22 @@ class _HomeScreenState extends State<HomeScreen> {
         itemCount: users.length,
         itemBuilder: (context, index) {
           final user = users[index];
+          final name = user['name']['first'];
           final email = user['email'];
+          final imageUrl = user['picture']['thumbnail'];
 
-          return ListTile(title: Text(email));
+          return ListTile(
+            leading: ClipRRect(
+              borderRadius: BorderRadius.circular(50),
+              child: SizedBox(
+                width: 40,
+                height: 40,
+                child: Image.network(imageUrl),
+              ),
+            ),
+            title: Text(name.toString()),
+            subtitle: Text(email),
+          );
         },
       ),
 
@@ -31,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void fetchUsers() async {
-    const url = "https://randomuser.me/api/?results=10";
+    const url = "https://randomuser.me/api/?results=50";
     final uri = Uri.parse(url);
     final response = await http.get(uri);
     final body = response.body;

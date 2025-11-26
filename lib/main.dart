@@ -10,6 +10,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: HomeScreen());
+    return const MaterialApp(
+      home: HomeScreen(),
+      title: "API",
+      debugShowCheckedModeBanner: false,
+    );
   }
 }
