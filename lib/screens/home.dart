@@ -15,30 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Rest API Call")),
-      body: ListView.builder(
-        itemCount: users.length,
-        itemBuilder: (context, index) {
-          final user = users[index];
-          final name = user['name']['first'];
-          final email = user['email'];
-          final imageUrl = user['picture']['thumbnail'];
-
-          return ListTile(
-            leading: ClipRRect(
-              borderRadius: BorderRadius.circular(50),
-              child: SizedBox(
-                width: 40,
-                height: 40,
-                child: Image.network(imageUrl),
-              ),
-            ),
-            title: Text(name.toString()),
-            subtitle: Text(email),
-          );
-        },
-      ),
-
+      appBar: AppBar(title: Text("API")),
       floatingActionButton: FloatingActionButton(onPressed: fetchUsers),
     );
   }
@@ -53,5 +30,6 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       users = json['results'];
     });
+    print("object");
   }
 }
