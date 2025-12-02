@@ -15,21 +15,20 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("API")),
+      appBar: AppBar(title: Text("Api")),
       floatingActionButton: FloatingActionButton(onPressed: fetchUsers),
     );
   }
 
   void fetchUsers() async {
-    const url = "https://randomuser.me/api/?results=50";
+    final url = "https://randomuser.me/api/?results=50";
     final uri = Uri.parse(url);
     final response = await http.get(uri);
     final body = response.body;
     final json = jsonDecode(body);
-
     setState(() {
       users = json['results'];
     });
-    print("object");
+    print("Fetch Users");
   }
 }
