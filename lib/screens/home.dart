@@ -1,8 +1,6 @@
-import 'dart:convert';
-
 import 'package:api/model/user.dart';
+import 'package:api/services/user_api.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -22,9 +20,6 @@ class _HomeScreenState extends State<HomeScreen> {
         itemCount: users.length,
         itemBuilder: (context, index) {
           final user = users[index];
-          final email = user.email;
-          // final color = user.gender == 'male' ? Colors.blue : Colors.pink;
-          final phone = user.phone;
 
           return ListTile(
             subtitle: Text(user.email),
@@ -37,28 +32,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void fetchUsers() async {
-    const url = 'https://randomuser.me/api/?results=50';
-    final uri = Uri.parse(url);
-    final response = await http.get(uri);
-    final body = response.body;
-    final json = jsonDecode(body);
-    final results = json['results'] as List<dynamic>;
-    final transform =
-        results.map((e) {
-          final name = UserName(
-            title: e['name']['title'],
-            first: e['name']['first'],
-            last: e['name']['last'],
-          );
-          return User(
-            gender: e['gender'],
-            phone: e['phone'],
-            email: e['email'],
-            name: name,
-          );
-        }).toList();
+    final response = await UserApi.fetchUsers();
     setState(() {
-      users = transform;
+      users = response;
     });
   }
 }
